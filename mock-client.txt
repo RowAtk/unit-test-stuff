@@ -1,0 +1,24 @@
+CUSTOMER
+-----------
+first name
+last name
+dob
+address
+contact number
+email
+
+SAMPLE CLIENT
+John
+Doe
+1996-03-22
+
+ADDRESS
+12 Unit Road
+Karma Town
+Kingston
+Kingston
+2134K5
+Jamaica
+
+18764555666
+jdoe@mail.com
