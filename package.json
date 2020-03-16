@@ -9,7 +9,8 @@
   "author": "Rowan Atkinson",
   "license": "ISC",
   "dependencies": {
-    "karma": "^4.4.1"
+    "karma": "^4.4.1",
+    "minimist": "^1.2.5"
   },
   "devDependencies": {
     "karma-chrome-launcher": "^3.1.0",
