@@ -129,20 +129,43 @@ describe('Update', function() {
     });
 
     describe('record modification', function(){
-        it('modifies client record', function() {
-            controls.fname = "Jane";
-            controls.address.line1 = "21 Unit Road";
-            controls.address.zip = "213K45"
-            // document.getElementById("fname").value = "Rowane";
-            // document.getElementById("line1").value = "21 Unit Road";
-            // document.getElementById("zip").value = "213K45";
+
+        beforeAll(function(){
+            fixture.cleanup();
+            fixture.load("update.fix.html");
+        });
+
+        beforeEach(function(){
+            this.fname = "Jane";
+            this.address.line1 = "21 Unit Road";
+            this.address.zip = "213K45";
+        });
+
+        it('validates user input', function(){
             
             // click 'submit'
-            document.getElementById("submit").click();
+            controls.click('submit');
+
+
+        });
+
+        it('modifies client record', function() {
+
+            // simulate update
+            controls.fname = this.fname;
+            controls.address.line1 = this.address.line1;
+            controls.address.zip = this.address.line2;
+
+            // click 'submit'
+            controls.click('submit');
+
+            // is input validated
+
+            // test
+            expect(controls.fname.value).toBe(this.fname);
+            expect(controls.address.line1.value).toBe(this.address.line1);
+            expect(controls.address.zip.value).toBe(this.address.zip);
             
-            // check if input is validated
-            
-    
             // check if
             expect(0).toBe(1);
         });
