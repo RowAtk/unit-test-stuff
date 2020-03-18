@@ -56,7 +56,7 @@ describe('Update', function() {
         console.log("End update test");
     });
 
-    it('changes to edit page', function () {
+    xit('changes to edit page', function () {
         var editBtn = document.getElementById("edit-btn");
         editBtn.click();
         expect(document.title).toBe("Edit Client");
@@ -70,7 +70,7 @@ describe('Update', function() {
             // fixture.load('update.fix.html');
         });
 
-        it('name and dob fields exist', function() {
+        xit('name and dob fields exist', function() {
             // expect(this.fname).toBeDefined();
             expect(this.fname.tagName).toBe("INPUT");
             // expect(this.lname).toBeDefined();
@@ -79,7 +79,7 @@ describe('Update', function() {
             expect(this.dob.tagName).toBe("INPUT");
         });
     
-        it('address fields exist', function() {    
+        xit('address fields exist', function() {    
             // expect(this.line1).toBeDefined();
             expect(this.line1.tagName).toBe("INPUT");
             // expect(this.line2).toBeDefined();
@@ -94,7 +94,7 @@ describe('Update', function() {
             expect(this.country.tagName).toBe("INPUT");
         });
     
-        it('email and telephone fields exist', function(){
+        xit('email and telephone fields exist', function(){
             // expect(this.telenum).toBeDefined();
             expect(this.telenum.tagName).toBe("INPUT");
             // expect(this.email).toBeDefined();
@@ -105,13 +105,13 @@ describe('Update', function() {
     describe('prefilled form', function(){
 
         describe('should show correct values in', function(){
-            it('name and birth fields', function(){
+            xit('name and birth fields', function(){
                 expect(this.fname.value).toBe(this.client.fname);
                 expect(this.lname.value).toBe(this.client.lname);
                 expect(this.dob.value).toBe(this.client.dob);
             });
     
-            it('address fields', function(){
+            xit('address fields', function(){
                 var a = this.client.address;
                 expect(this.line1.value).toBe(a.line1);
                 expect(this.line2.value).toBe(a.line2);
@@ -121,7 +121,7 @@ describe('Update', function() {
                 expect(this.country.value).toBe(a.country);
             });
     
-            it('telephone and email fields', function(){
+            xit('telephone and email fields', function(){
                 expect(this.telenum.value).toBe(this.client.telenum);
                 expect(this.email.value).toBe(this.client.email);
             });
@@ -130,23 +130,29 @@ describe('Update', function() {
 
     describe('record modification', function(){
 
-        beforeAll(function(){
-            fixture.cleanup();
-            fixture.load("update.fix.html");
-        });
+        var win;
 
         beforeEach(function(){
-            this.fname = "Jane";
-            this.address.line1 = "21 Unit Road";
-            this.address.zip = "213K45";
+            fixture.setBase('test/fixtures');
+            fixture.load("update.fix.html");
+            win = window;
+            spyOn(win, 'validateInput').and.returnValue(true);
+            this.fname.value = "Jane";
+            this.address.line1.value = "21 Unit Road";
+            this.address.zip.value = "213K45";
+        });
+
+        afterEach(function(){
+            fixture.cleanup();
         });
 
         it('validates user input', function(){
-            
             // click 'submit'
+            // document.getElementById('submit').click();
             controls.click('submit');
 
-
+            // var valid = win.validateInput();
+            expect(win.validateInput).toHaveBeenCalled();
         });
 
         it('modifies client record', function() {
@@ -159,10 +165,8 @@ describe('Update', function() {
             // click 'submit'
             controls.click('submit');
 
-            // is input validated
-
             // test
-            expect(controls.fname.value).toBe(this.fname);
+            expect(controls.fname.value).toBe(this.fname.value);
             expect(controls.address.line1.value).toBe(this.address.line1);
             expect(controls.address.zip.value).toBe(this.address.zip);
             
