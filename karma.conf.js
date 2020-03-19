@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine-jquery', 'jasmine', 'fixture'],
+    frameworks: ['jasmine-jquery', 'jasmine-ajax', 'jasmine', 'parcel', 'fixture'],
 
 
     // list of files / patterns to load in the browser
@@ -23,6 +23,7 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
+      // 'test/e2e/repository/viewallclients.e2e.js'
       // 'test/e2e/repository/delete.e2e.js',
       // 'test/**/update.e2e.js',
       // 'test/**/unit/*.unit.js'
@@ -33,7 +34,9 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       '**/*.html'   : ['html2js'],
-      '**/*.json'   : ['json_fixtures']
+      '**/*.json'   : ['json_fixtures'],
+      'test/e2e/viewallclients.e2e.js': [ 'parcel' ],
+			'test/unit/viewallclients.unit.js': [ 'parcel' ]
     },
     
     // JSON Fixtures Preprocessor config
