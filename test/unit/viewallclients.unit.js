@@ -23,7 +23,7 @@ describe('View All Clients', function() {
         	"zip": "2134K5",
         	"country": "Jamaica"
         },
-        "telenum": "18764555666",
+        "telenum": "1(876)455-5666",
         "email": "jdoe@mail.com"
       }
     },
