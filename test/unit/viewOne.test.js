@@ -89,6 +89,8 @@ describe('The viewOne function test case', function () {
 
         fixture.setBase("test/fixtures");
         fixture.load("testPage2.fix.html");
+        var displayStub = jasmine.createSpy('displayDetails');
+        var viewStub = jasmine.createSpy('viewOne').and.callThrough();
         // var fix = '<div id="fixture"><table>'
         //     + '<tr><th>Client</th><th>ID</th></tr>'
         //     + '<tr><td>John Doe</td><td id="custID1">1234</td></tr>'
@@ -110,28 +112,28 @@ describe('The viewOne function test case', function () {
 
 
     it('it should call the  displayDetails funciton', function () {
-        var stub = jasmine.createSpy('displayDetails');
-
+    
         // id = document.getElementById("custID1").click();
         viewOne(id);
-        expect(stub).toHaveBeenCalledWith(id); 
+        expect(displayStub).toHaveBeenCalledWith(id); 
         // spyOn(scope, 'displayDetails').andReturn(null);
         
     });
 
     it('should redirect to a page with the details for client when it is clicked', function () {
-        spyOn(scope, 'displayDetails').andReturn(null);
-        id = fixture.getElementById("custID1").click();
-        var result = viewOne(id);
-
+        id = document.getElementById("custID1");
+        id.click();
+        viewOne(id);
+        expect(displayStub).toHaveBeenCalledWith(id);
         expect(document.title).toBe('Client Details');
         expect(document.getElementById('fname').innerHTML).toBe("John");   //expect the correct details to be displayed
         expect(document.getElementById('lname').innerHTML).toBe("Doe");
     });
 
     it('should redirect to a page with the details for client2 when it is clicked', function () {
-        spyOn(scope, 'displayDetails').andReturn();
-        id = fixture.getElementById("custID2").click();
+        expect(displayStub).toHaveBeenCalledWith(id);
+        //spyOn(scope, 'displayDetails').andReturn();
+        // id = fixture.getElementById("custID2").click();
         var result = viewOne(id);
 
         expect(document.title).toBe('Client Details');
@@ -140,14 +142,16 @@ describe('The viewOne function test case', function () {
     });
 
     it('should display an error on the current page if fetching the data failed', function () {
-        spyOn(scope, 'displayDetails').andReturn(null);
+        expect(displayStub).toHaveBeenCalledWith(id);
+        //spyOn('displayDetails').andReturn(null);
         id = fixture.getElementById("custID1").click();
         var result = viewOne(id);
         expect(result).toBe("Could not retrieve data.\n");
     });
 
     it('should display an error if the clientID does not exist', function () {
-        spyOn('scope, displayDetails').andReturn();
+        expect(displayStub).toHaveBeenCalledWith(id);
+        //spyOn('scope, displayDetails').andReturn();
         id = document.getElementById("custID1").click();
         var result = viewOne(id);
         expect(result).toBe("Could not connect to database.\n");
