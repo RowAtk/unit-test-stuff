@@ -13,13 +13,15 @@ describe('View All Clients', function() {
       responseText: {
         "forename": "John",
         "surname": "Doe",
-        "dob": "12/03/96",
-        "address1": "12 Unit Road",
-        "address2": "Karma Town",
-        "city": "Kingston",
-        "state": "Kingston",
-        "zip": "2134K5",
-        "country": "Jamaica",
+        "dob": "1996-03-22",
+        "address": {
+        	"address1": "12 Unit Road",
+        	"address2": "Karma Town",
+        	"city": "Kingston",
+        	"state": "Kingston",
+        	"zip": "2134K5",
+        	"country": "Jamaica",
+        }
         "phone": "18764555666",
         "email": "jdoe@mail.com"
       }
@@ -66,12 +68,12 @@ describe('View All Clients', function() {
         $('<td class="forename">').text(responses['data']['responseText']['forename']),
         $('<td class="surname">').text(responses['data']['responseText']['surname']),
         $('<td class="dob">').text(responses['data']['responseText']['dob']),
-        $('<td class="address1">').text(responses['data']['responseText']['address1']),
-        $('<td class="address2">').text(responses['data']['responseText']['address2']),
-        $('<td class="city">').text(responses['data']['responseText']['city']),
-        $('<td class="state">').text(responses['data']['responseText']['state']),
-        $('<td class="zip">').text(responses['data']['responseText']['zip']),
-        $('<td class="country">').text(responses['data']['responseText']['country']),
+        $('<td class="address1">').text(responses['data']['responseText']['address']['address1']),
+        $('<td class="address2">').text(responses['data']['responseText']['address']['address2']),
+        $('<td class="city">').text(responses['data']['responseText']['address']['city']),
+        $('<td class="state">').text(responses['data']['responseText']['address']['state']),
+        $('<td class="zip">').text(responses['data']['responseText']['address']['zip']),
+        $('<td class="country">').text(responses['data']['responseText']['address']['country']),
         $('<td class="phone">').text(responses['data']['responseText']['phone']),
         $('<td class="email">').text(responses['data']['responseText']['email'])
       ).appendTo($('#clientsTable tbody'));
