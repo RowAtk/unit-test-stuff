@@ -3,50 +3,6 @@
  *  of the Repository Epic
  */
 
- /*
- INPUTS
- -firstname
- -lastname
- -dob
- -address
-  -street
-  -town
-  -city
-  -parish
-  -postal_code
-  -country
--telephone
--email
-
-
-OUTPUT
-- added to repository/database
-
-FUNCTIONS
-1. clientData
-2. saveData
-3. validateClient
-4. validateName
-5. validateEmail
-6. validateTelephone
-7. formatDOB
-*/
-
-var data = {
-  fname: "John",
-  lname: "Doe",
-  dob: "1996-03-22",
-  address: {
-      line1: "12 Unit Road",
-      line2: "Karma Town",
-      city: "Kingston",
-      state: "Kingston",
-      zip: "2134K5",
-      country: "Jamaica"
-  },
-  telenum: "1(876)455-5666",
-  email: "jdoe@mail.com"
-};
 
 //TESTING
 describe('Add Client Test Case', function(){
@@ -71,6 +27,10 @@ describe('Add Client Test Case', function(){
     expect(validateAddress).toBeDefined();
   });
 
+  it('should have validateZipCode defined', function(){
+    expect(validateZipCode).toBeDefined();
+  });
+
   it('should have validateEmail defined', function(){
     expect(validateEmail).toBeDefined();
   });
@@ -83,10 +43,20 @@ describe('Add Client Test Case', function(){
     expect(formatDOB).toBeDefined();
   });
 
+  it('should have generateID define', function(){
+    expect(generateID).toBeDefined();
+  });
+
+  it('should have updateDataObject define', function(){
+    expect(updateDataObject).toBeDefined();
+  });
+
   describe('should call the "clientData" function', function(){
+    var data;
     var win;
+    var noData;
     beforeEach(function() {
-      var data = {
+      data = {
         fname: "John",
         lname: "Doe",
         dob: "1996-03-22",
@@ -100,6 +70,21 @@ describe('Add Client Test Case', function(){
         },
         telenum: "1(876)455-5666",
         email: "jdoe@mail.com"
+      };
+      noData = {
+        fname: "",
+        lname: "",
+        dob: "",
+        address: {
+          line1: "",
+          line2: "",
+          city: "",
+          state: "",
+          zip: "",
+          country: ""
+        },
+        telenum: "",
+        email: ""
       };
       win = window;
     });
@@ -127,6 +112,19 @@ describe('Add Client Test Case', function(){
       expect(result).toBeTruthy();
     });
 
+    it('and this function should return false when the data object is empty', function(){
+      var result = clientData(noData);
+      expect(result).toBeFalsy();
+    })
+
+    it('and this function should return false when validateClient function fails', function(){
+      spyOn(win, 'clientData').and.callThrough();
+      spyOn(win, 'validateClient').and.returnValue(false);
+      spyOn(win, 'formatDOB').and.returnValue(true);
+      var result = clientData(data);
+      expect(result).toBeFalsy();
+    });
+
     it('and this function should return false when formatDOB function fails', function(){
       spyOn(win, 'clientData').and.callThrough();
       spyOn(win, 'validateClient').and.returnValue(true);
@@ -136,12 +134,11 @@ describe('Add Client Test Case', function(){
     });
   });
 
-
-
   describe('should call the "validateClient" function', function(){
+    var data;
     var win;
     beforeEach(function() {
-      var data = {
+      data = {
         fname: "John",
         lname: "Doe",
         dob: "1996-03-22",
@@ -264,9 +261,35 @@ describe('Add Client Test Case', function(){
     });
   });
 
-  // describe('should call the "validateAddress" function', function(){
-    
-  // })
+  describe('should call the "validateAddress" function', function(){
+    it('and this function should return false when address object is empty', function(){
+      var result = validateAddress({});
+      expect(result).toBeFalsy();
+    });
+
+    describe('should call the "validateZipCode" function', function(){
+      it('and this function should return false when the zip code field is empty', function(){
+        var result = validateZipCode('');
+        expect(result).toBeFalsy();
+      });
+
+      it('and this function should return true when the length is 6', function(){
+        var result = validateZipCode('2134K5');
+        expect(result).toBeTruthy();
+      });
+
+      it('and this function should return false when the length is less than 6', function(){
+        var result = validateZipCode('24K5');
+        expect(result).toBeFalsy();
+      });
+
+      it('and this function should return false when the length is greater than 6', function(){
+        var result = validateZipCode('21034K99');
+        expect(result).toBeFalsy();
+      });
+
+    });
+  });
 
   describe('should call the "validateEmail" function', function(){
     it('and this function should return true with valid email', function(){
@@ -319,8 +342,126 @@ describe('Add Client Test Case', function(){
     });
   });
 
-  // describe('should call the "saveData" function', function(){
-  //   hd
-  // });
+  describe('should call the "generateID" function', function(){
+    it('and this function return a valid id number', function(){
+      var result = generateID();
+      expect(result).not.toBeNaN();
+    });
+  });
+
+  describe('should call the "saveData" function', function(){
+    var data;
+    var new_data;
+    var success;
+    var error;
+    var win;
+    var invalid;
+    beforeEach(function() {
+      data = {
+        fname: "John",
+        lname: "Doe",
+        dob: "1996-03-22",
+        address: {
+            line1: "12 Unit Road",
+            line2: "Karma Town",
+            city: "Kingston",
+            state: "Kingston",
+            zip: "2134K5",
+            country: "Jamaica"
+        },
+        telenum: "1(876)455-5666",
+        email: "jdoe@mail.com"
+      };
+      new_data = {
+        fname: "John",
+        lname: "Doe",
+        dob: "1996-03-22",
+        address: {
+            line1: "12 Unit Road",
+            line2: "Karma Town",
+            city: "Kingston",
+            state: "Kingston",
+            zip: "2134K5",
+            country: "Jamaica"
+        },
+        telenum: "1(876)455-5666",
+        email: "jdoe@mail.com"
+      };
+      success = {
+        status: 200,
+        contentType: 'text/plain',
+        message: "Client successfully added to repository"
+      };
+      error = {
+        status: 400,
+        contentType: 'text/plain',
+        message: "Client unsuccessfully added to repository"
+      };
+      invalid = "Invalid data entry";
+      win = window;
+    });
+  
+    it('and this function should call the "clientData" function', function(){
+      spyOn(win, 'saveData').and.callThrough();
+      spyOn(win, 'clientData');
+      win.saveData(data);
+      expect(win.clientData).toHaveBeenCalled();
+    });
+
+    it('and this function should call the "generateID" function', function(){
+      spyOn(win, 'saveData').and.callThrough();
+      spyOn(win, 'generateID');
+      win.saveData(data);
+      expect(win.generateID).toHaveBeenCalled();
+    });
+
+    it('and this function should call the "updateDataObject" function', function(){
+      spyOn(win, 'saveData').and.callThrough();
+      spyOn(win, 'updateDataObject');
+      win.saveData(data);
+      expect(win.updateDataObject).toHaveBeenCalled();
+    });
+
+    it('and this function should update the data object with the generatedID', function(){
+      spyOn(win, 'saveData').and.callThrough();
+      var result = updateDataObject('1234', data);
+      expect(result).toBe(new_data);
+    })
+
+    it('and this function should post data to the database when clientData returns true', function(){
+      spyOn(win, 'saveData').and.callThrough();
+      spyOn(win, 'clientData').and.returnValue(true);
+      win.saveData(data);
+      
+      //do post request with ajax
+      // var xhr = new XMLHttpRequest();
+      // xhr.onreadystatechange = function(args) {
+      //   if (this.readyState == this.DONE) {
+      //     testObj.successFunction(this.responseText);
+      //   }
+      // };
+
+    });
+
+    it('and this function should return an error message data when clientData returns false', function(){
+      spyOn(win, 'saveData').and.callThrough();
+      spyOn(win, 'clientData').and.returnValue(false);
+      var result = saveData(new_data);
+      expect(result).toBe(invalid);
+    });
+
+    it('and this function should return a json object with status:200 and confirmation message\
+    when client is successfully added to the database', function(){
+      var result = saveData(new_data);
+      expect(result).toBe(success);
+    });
+
+    it('and this function should return a json object with status:400 and error message\
+    when client could not be added to the database', function(){
+      var result = saveData(new_data);
+      expect(result).toBe(error);
+    });
+  
+  });
 
 });
