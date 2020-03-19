@@ -110,8 +110,8 @@ describe('The viewOne function test case', function () {
             expect(displayDetails).toHaveBeenCalled();
         });
 
-        it('a button for view should exist', function() {
-            expect(document.getElementById('view')).toBeInDOM();
+        it('a button for delete should exist', function() {
+            expect(document.getElementById('delete')).toBeInDOM();
         });
 
         it('a button for edit should exist', function() {

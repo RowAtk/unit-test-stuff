@@ -24,8 +24,8 @@ describe('Update', function() {
             email: "jdoe@mail.com"
         };
 
-        fixture.setBase('test/fixtures');
-        fixture.load("details.fix.html");
+        // fixture.setBase('test/fixtures');
+        // fixture.load("details.fix.html");
     });
 
     beforeEach(function() {
@@ -103,7 +103,7 @@ describe('Update', function() {
     describe('prefilled form', function(){
 
         describe('should show correct values in', function(){
-            it('name and birth fields', function(){
+            it('name and date of birth fields', function(){
                 expect(this.fname.value).toBe(this.client.fname);
                 expect(this.lname.value).toBe(this.client.lname);
                 expect(this.dob.value).toBe(this.client.dob);

@@ -94,7 +94,7 @@ describe('Add Client Test Case', function(){
       spyOn(win, 'clientData').and.callThrough();
       spyOn(win,'validateClient');
       win.clientData(data);
-      expect(win.validateClient).toHaveBeenCalled();
+      expect(win.validateClvalidateCient).toHaveBeenCalled();
     });
 
     it('and this function should call the formatDOB function', function(){

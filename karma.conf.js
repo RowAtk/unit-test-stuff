@@ -23,9 +23,12 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
-      // 'test/e2e/viewallclients.e2e.js'
-      // 'test/e2e/delete.e2e.js',
+      // 'test/unit/add.unit.js',
+      // 'test/unit/viewallclients.unit.js',
+      // 'test/e2e/viewallclients.e2e.js',
+      // 'test/unit/viewOne.unit.js',
       // 'test/**/update.e2e.js',
+      // 'test/e2e/delete.e2e.js',
       // 'test/**/unit/*.unit.js'
     ],
 
@@ -33,6 +36,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/*.js': 'coverage',
       '**/*.html'   : ['html2js'],
       '**/*.json'   : ['json_fixtures'],
       'test/e2e/viewallclients.e2e.js': [ 'browserify' ],
@@ -48,7 +52,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['spec'],
+    reporters: ['spec', 'coverage'],
     specReporter: {
       maxLogLines: 5,         // limit number of lines logged per test
       suppressErrorSummary: true,  // do not print error summary

@@ -126,14 +126,14 @@ describe('View All Clients', function() {
      expect($('tbody > tr > td')).toHaveLength(11);
      expect($('tbody > tr > td.fname')).toContainText("John");
      expect($('tbody > tr > td.lname')).toContainText("Doe");
-     expect($('tbody > tr > td.dob')).toContainText("12/03/96");
+     expect($('tbody > tr > td.dob')).toContainText("1996-03-22");
      expect($('tbody > tr > td.line1')).toContainText("12 Unit Road");
      expect($('tbody > tr > td.line2')).toContainText("Karma Town");
      expect($('tbody > tr > td.city')).toContainText("Kingston");
      expect($('tbody > tr > td.state')).toContainText("Kingston");
      expect($('tbody > tr > td.zip')).toContainText("2134K5");
      expect($('tbody > tr > td.country')).toContainText("Jamaica");
-     expect($('tbody > tr > td.telenum')).toContainText("18764555666");
+     expect($('tbody > tr > td.telenum')).toContainText("1(876)455-5666");
      expect($('tbody > tr > td.email')).toContainText("jdoe@mail.com");
 
     });

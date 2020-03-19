@@ -114,9 +114,4 @@ describe('Delete', function() {
             expect(document.title).toBe('Client');
         }); 
     });
-
-   
-    
-    
-
 });
