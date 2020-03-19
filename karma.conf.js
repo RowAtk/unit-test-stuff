@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine-jquery', 'jasmine-ajax', 'jasmine', 'parcel', 'fixture'],
+    frameworks: ['jasmine-jquery', 'jasmine-ajax', 'jasmine', 'browserify', 'fixture'],
 
 
     // list of files / patterns to load in the browser
@@ -23,8 +23,8 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
-      // 'test/e2e/repository/viewallclients.e2e.js'
-      // 'test/e2e/repository/delete.e2e.js',
+      // 'test/e2e/viewallclients.e2e.js'
+      // 'test/e2e/delete.e2e.js',
       // 'test/**/update.e2e.js',
       // 'test/**/unit/*.unit.js'
     ],
@@ -35,8 +35,8 @@ module.exports = function(config) {
     preprocessors: {
       '**/*.html'   : ['html2js'],
       '**/*.json'   : ['json_fixtures'],
-      'test/e2e/viewallclients.e2e.js': [ 'parcel' ],
-			'test/unit/viewallclients.unit.js': [ 'parcel' ]
+      'test/e2e/viewallclients.e2e.js': [ 'browserify' ],
+			'test/unit/viewallclients.unit.js': [ 'browserify' ]
     },
     
     // JSON Fixtures Preprocessor config
@@ -48,7 +48,15 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['spec'],
+    specReporter: {
+      maxLogLines: 5,         // limit number of lines logged per test
+      suppressErrorSummary: true,  // do not print error summary
+      suppressFailed: false,  // do not print information about failed tests
+      suppressPassed: false,  // do not print information about passed tests
+      suppressSkipped: true,  // do not print information about skipped tests
+      showSpecTiming: false // print the time elapsed for each spec
+    },
 
 
     // web server port

@@ -3,7 +3,7 @@
  */
 
 require('jasmine-ajax');
-var $ = require('jquery');
+var $ = require('jquery-browserify');
 
 describe('View All Clients', function() {
   var responses = {

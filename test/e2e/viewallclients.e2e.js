@@ -2,7 +2,7 @@
  * End-to-End tests for Viewing All Clients
  */
 
-var $ = require('jquery');
+var $ = require('jquery-browserify');
 
 describe('View All Clients', function() {
 	var foo;
