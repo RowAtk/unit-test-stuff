@@ -21,16 +21,13 @@ describe('Delete', function() {
             telenum: "1(876)455-5666",
             email: "jdoe@mail.com"
         };
-
-        fixture.setBase('test/fixtures');
-        fixture.load("details.fix.html");
     });
 
     beforeEach(function() {
 
         fixture.setBase('test/fixtures');
         fixture.load("details.fix.html");
-        document.getElementById("delete-btn").click();
+        // document.getElementById("delete-btn").click();
 
         this.fname = controls.fname;
         this.lname = controls.lname;
@@ -44,8 +41,8 @@ describe('Delete', function() {
         this.country = this.address.country;
         this.telenum = controls.telenum;
         this.email = controls.email;
-        console.log("DID IT");
-        console.log(this.telenum);
+        // console.log("DID IT");
+        // console.log(this.telenum);
     });
 
     afterEach(function() {
@@ -53,64 +50,73 @@ describe('Delete', function() {
     });
 
     afterAll(function(){
-        console.log("End delete test");
+        // console.log("End delete test");
     });
 
-    it('presents delete confirmation dialogue', function () {
-        var deleteBtn = document.getElementById("delete-btn");
-        deleteBtn.click();
-        var dialogue = window.confirm("Are you sure you want to delete this client?")
-        expect(dialogue.typeof).toBe('function');
-        // expect(document.getElementById("header").value).toBe("Delete Client");
+    var foo;
+
+	beforeEach(function() {
+    	foo = {
+      		redirect: function(url) {
+				location.href = url
+			}
+    	};
+    });
+    
+    describe('successfully deleting a client', function() {
+        it('presents delete confirmation dialogue', function () { 
+            var deleteBtn = document.getElementById("delete-btn");
+            spyOnEvent(deleteBtn, 'click');
+            deleteBtn.click();
+            expect('click').toHaveBeenTriggeredOn(deleteBtn);
+            spyOn(window, 'confirm');
+            expect(window.confirm).toHaveBeenCalledWith("Are you sure you want to delete this client?");
+            
+        });  
         
-    });  
-    it('deletes a client', function (){
-        var dialogue = window.confirm("Are you sure you want to delete this client?")
-        if (dialogue) {
+        it('deletes a client', function () {
+            spyOn(window, 'confirm').and.returnValue(true);
             this.client = {};
-        }
-        else {
-            dialogue.close();
-        }
-        expect(this.client).toBe(undefined);
-    });
-    it('does not delete a client', function (){
-        var x = this.client;
-        var dialogue = window.confirm("Are you sure you want to delete this client?")
-        if (dialogue) {
-            this.client = {};
-        }
-        else {
-            dialogue.close();
-        }
-        expect(x).toBe(this.client);
-    });
-    it('displays success message', function (){
-        var dialogue = window.confirm("Are you sure you want to delete this client?")
-        if (dialogue) {
-            this.client = {};
-            var success = alert("Client has been deleted!");
-            console.log(success);
-        }
-        else {
-            dialogue.close();
-        }
-        expect(success).toBe('function');
+            expect(this.client).toBe("undefined");
+        });
 
-    });
-    it('redirects to clients page', function (){
-        var dialogue = window.confirm("Are you sure you want to delete this client?")
-        if (dialogue) {
-            this.client = {};
-            var success = alert("Client has been deleted!");
-            console.log(success);
-            window.location.href('Clients.html');
-        }
-        else {
-            dialogue.close();
-        }
-        expect(document.title).toBe('Clients');
+        it('displays success message', function (){
+            spyOn(window, 'alert'); 
+            var message = "Client has been deleted!";
+            expect(window.alert).toHaveBeenCalledWith(message);
+        });
 
-    }); 
+        it('redirects to clients page', function (){
+            spyOn(foo, 'redirect');
+            expect(foo.redirect).toHaveBeenCalledWith('/Clients');
+            expect(document.title).toBe('Clients');
+    
+        }); 
+    });
+
+    describe('unsuccessfully delete a client', function() {
+        it('does not delete a client', function (){
+            spyOn(window, 'confirm').and.returnValue(false);
+            //var x = this.client;
+            //expect(x).toBe(this.client);
+            expect(this.client).not.toBeTruthy();
+        });
+    
+        it('displays an error message', function (){
+            spyOn(window, 'alert'); 
+            var message = "Error occurred trying to delete client record.";
+            // expect(window.alert).toHaveBeenCalled();
+            expect(window.alert).toHaveBeenCalledWith(message);
+        });
+    
+    
+        it('does not redirect to clients page', function (){
+            expect(document.title).toBe('Client');
+        }); 
+    });
+
+   
+    
+    
 
 });

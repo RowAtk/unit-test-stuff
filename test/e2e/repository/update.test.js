@@ -56,7 +56,7 @@ describe('Update', function() {
         console.log("End update test");
     });
 
-    xit('changes to edit page', function () {
+    it('changes to edit page', function () {
         var editBtn = document.getElementById("edit-btn");
         editBtn.click();
         expect(document.title).toBe("Edit Client");
@@ -68,9 +68,10 @@ describe('Update', function() {
 
         beforeEach(function(){
             // fixture.load('update.fix.html');
+            controls.click('edit-btn');
         });
 
-        xit('name and dob fields exist', function() {
+        it('name and dob fields exist', function() {
             // expect(this.fname).toBeDefined();
             expect(this.fname.tagName).toBe("INPUT");
             // expect(this.lname).toBeDefined();
@@ -79,7 +80,7 @@ describe('Update', function() {
             expect(this.dob.tagName).toBe("INPUT");
         });
     
-        xit('address fields exist', function() {    
+        it('address fields exist', function() {    
             // expect(this.line1).toBeDefined();
             expect(this.line1.tagName).toBe("INPUT");
             // expect(this.line2).toBeDefined();
@@ -94,7 +95,7 @@ describe('Update', function() {
             expect(this.country.tagName).toBe("INPUT");
         });
     
-        xit('email and telephone fields exist', function(){
+        it('email and telephone fields exist', function(){
             // expect(this.telenum).toBeDefined();
             expect(this.telenum.tagName).toBe("INPUT");
             // expect(this.email).toBeDefined();
@@ -111,7 +112,7 @@ describe('Update', function() {
                 expect(this.dob.value).toBe(this.client.dob);
             });
     
-            xit('address fields', function(){
+            it('address fields', function(){
                 var a = this.client.address;
                 expect(this.line1.value).toBe(a.line1);
                 expect(this.line2.value).toBe(a.line2);
@@ -121,7 +122,7 @@ describe('Update', function() {
                 expect(this.country.value).toBe(a.country);
             });
     
-            xit('telephone and email fields', function(){
+            it('telephone and email fields', function(){
                 expect(this.telenum.value).toBe(this.client.telenum);
                 expect(this.email.value).toBe(this.client.email);
             });
@@ -155,7 +156,7 @@ describe('Update', function() {
             expect(win.validateInput).toHaveBeenCalled();
         });
 
-        it('modifies client record', function() {
+        xit('modifies client record', function() {
 
             // simulate update
             controls.fname = this.fname;
@@ -163,15 +164,15 @@ describe('Update', function() {
             controls.address.zip = this.address.line2;
 
             // click 'submit'
-            controls.click('submit');
+            var submitBtn = document.getElementById('submit');
+            spyOnEvent(submitBtn, 'click');
+            submitBtn.click();
+            expect('click').toHaveBeenTriggeredOn(submitBtn);
 
             // test
             expect(controls.fname.value).toBe(this.fname.value);
             expect(controls.address.line1.value).toBe(this.address.line1);
             expect(controls.address.zip.value).toBe(this.address.zip);
-            
-            // check if
-            expect(0).toBe(1);
         });
     }); 
 
