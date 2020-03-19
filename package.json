@@ -9,6 +9,7 @@
   "author": "Rowan Atkinson",
   "license": "ISC",
   "dependencies": {
+    "jasmine-jquery": "^2.1.1",
     "karma": "^4.4.1",
     "minimist": "^1.2.5"
   },
@@ -18,6 +19,7 @@
     "karma-fixture": "^0.2.6",
     "karma-html2js-preprocessor": "^1.1.0",
     "karma-jasmine": "^3.1.1",
+    "karma-jasmine-jquery": "^0.1.1",
     "karma-json-fixtures-preprocessor": "0.0.6"
   }
 }
