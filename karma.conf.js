@@ -26,7 +26,8 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
-        'test/e2e/repository/*.js'
+        'test/e2e/repository/*.js',
+        'test/unit/add.test.js'
     ],
 
 

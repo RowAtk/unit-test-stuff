@@ -114,7 +114,7 @@ describe('The viewOne function test case', function () {
 
         // id = document.getElementById("custID1").click();
         viewOne(id);
-        expect(stub).toHaveBeenCalled(); 
+        expect(stub).toHaveBeenCalledWith(id); 
         // spyOn(scope, 'displayDetails').andReturn(null);
         
     });
