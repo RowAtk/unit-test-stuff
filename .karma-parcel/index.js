@@ -11820,16 +11820,19 @@ describe('View All Clients', function () {
       status: 200,
       contentType: "application/json",
       responseText: {
-        "forename": "John",
-        "surname": "Doe",
-        "dob": "12/03/96",
-        "address1": "12 Unit Road",
-        "address2": "Karma Town",
-        "city": "Kingston",
-        "state": "Kingston",
-        "zip": "2134K5",
-        "country": "Jamaica",
-        "phone": "18764555666",
+        "id": "1234",
+        "fname": "John",
+        "lname": "Doe",
+        "dob": "1996-03-22",
+        "address": {
+          "line1": "12 Unit Road",
+          "line2": "Karma Town",
+          "city": "Kingston",
+          "state": "Kingston",
+          "zip": "2134K5",
+          "country": "Jamaica"
+        },
+        "telenum": "18764555666",
         "email": "jdoe@mail.com"
       }
     },
@@ -11844,10 +11847,10 @@ describe('View All Clients', function () {
       responseText: "An error occurred trying to access client records."
     }
   };
-  var fixture = "\n     <div class=\"table-responsive\" id=\"fixture\">\n       <table class=\"table\" id=\"clientsTable\">\n         <thead>\n           <th class=\"forename\">Forename</th>\n           <th class=\"surname\">Surname</th>\n           <th class=\"dob\">Date of Birth</th>\n           <th class=\"address1\">Address 1</th>\n           <th class=\"address2\">Address 2</th>\n           <th class=\"city\">City</th>\n           <th class=\"state\">State</th>\n           <th class=\"zip\">Zip Code</th>\n           <th class=\"country\">Country</th>\n           <th class=\"phone\">Phone Number</th>\n           <th class=\"email\">Email Address</th>\n         </thead>\n         <tbody>\n         </tbody>\n       </table>\n     </div>\n   ";
+  var fixture = "\n     <div class=\"table-responsive\" id=\"fixture\">\n       <table class=\"table\" id=\"clientsTable\">\n         <thead>\n           <th class=\"fname\">fname</th>\n           <th class=\"lname\">lname</th>\n           <th class=\"dob\">Date of Birth</th>\n           <th class=\"line1\">Address 1</th>\n           <th class=\"line2\">Address 2</th>\n           <th class=\"city\">City</th>\n           <th class=\"state\">State</th>\n           <th class=\"zip\">Zip Code</th>\n           <th class=\"country\">Country</th>\n           <th class=\"telenum\">telenum Number</th>\n           <th class=\"email\">Email Address</th>\n         </thead>\n         <tbody>\n         </tbody>\n       </table>\n     </div>\n   ";
   describe('on success when there are records in the database', function () {
     var insertRecords = function insertRecords() {
-      $('<tr>').append($('<td class="forename">').text(responses['data']['responseText']['forename']), $('<td class="surname">').text(responses['data']['responseText']['surname']), $('<td class="dob">').text(responses['data']['responseText']['dob']), $('<td class="address1">').text(responses['data']['responseText']['address1']), $('<td class="address2">').text(responses['data']['responseText']['address2']), $('<td class="city">').text(responses['data']['responseText']['city']), $('<td class="state">').text(responses['data']['responseText']['state']), $('<td class="zip">').text(responses['data']['responseText']['zip']), $('<td class="country">').text(responses['data']['responseText']['country']), $('<td class="phone">').text(responses['data']['responseText']['phone']), $('<td class="email">').text(responses['data']['responseText']['email'])).appendTo($('#clientsTable tbody'));
+      $('<tr>').append($('<td class="fname">').text(responses['data']['responseText']['fname']), $('<td class="lname">').text(responses['data']['responseText']['lname']), $('<td class="dob">').text(responses['data']['responseText']['dob']), $('<td class="line1">').text(responses['data']['responseText']['address']['line1']), $('<td class="line2">').text(responses['data']['responseText']['address']['line2']), $('<td class="city">').text(responses['data']['responseText']['address']['city']), $('<td class="state">').text(responses['data']['responseText']['address']['state']), $('<td class="zip">').text(responses['data']['responseText']['address']['zip']), $('<td class="country">').text(responses['data']['responseText']['address']['country']), $('<td class="telenum">').text(responses['data']['responseText']['telenum']), $('<td class="email">').text(responses['data']['responseText']['email'])).appendTo($('#clientsTable tbody'));
     };
 
     it('should retrieve client records from the database', function () {
@@ -11887,16 +11890,16 @@ describe('View All Clients', function () {
       stub = jasmine.createSpy('insertRecords');
       expect(stub).toHaveBeenCalled();
       expect($('tbody > tr > td')).toHaveLength(11);
-      expect($('tbody > tr > td.forename')).toContainText("John");
-      expect($('tbody > tr > td.surname')).toContainText("Doe");
+      expect($('tbody > tr > td.fname')).toContainText("John");
+      expect($('tbody > tr > td.lname')).toContainText("Doe");
       expect($('tbody > tr > td.dob')).toContainText("12/03/96");
-      expect($('tbody > tr > td.address1')).toContainText("12 Unit Road");
-      expect($('tbody > tr > td.address2')).toContainText("Karma Town");
+      expect($('tbody > tr > td.line1')).toContainText("12 Unit Road");
+      expect($('tbody > tr > td.line2')).toContainText("Karma Town");
       expect($('tbody > tr > td.city')).toContainText("Kingston");
       expect($('tbody > tr > td.state')).toContainText("Kingston");
       expect($('tbody > tr > td.zip')).toContainText("2134K5");
       expect($('tbody > tr > td.country')).toContainText("Jamaica");
-      expect($('tbody > tr > td.phone')).toContainText("18764555666");
+      expect($('tbody > tr > td.telenum')).toContainText("18764555666");
       expect($('tbody > tr > td.email')).toContainText("jdoe@mail.com");
     });
   });

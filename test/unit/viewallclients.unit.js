@@ -11,18 +11,19 @@ describe('View All Clients', function() {
       status: 200,
       contentType: "application/json",
       responseText: {
-        "forename": "John",
-        "surname": "Doe",
+      	"id": "1234",
+        "fname": "John",
+        "lname": "Doe",
         "dob": "1996-03-22",
         "address": {
-        	"address1": "12 Unit Road",
-        	"address2": "Karma Town",
+        	"line1": "12 Unit Road",
+        	"line2": "Karma Town",
         	"city": "Kingston",
         	"state": "Kingston",
         	"zip": "2134K5",
-        	"country": "Jamaica",
-        }
-        "phone": "18764555666",
+        	"country": "Jamaica"
+        },
+        "telenum": "18764555666",
         "email": "jdoe@mail.com"
       }
     },
@@ -44,16 +45,16 @@ describe('View All Clients', function() {
      <div class="table-responsive" id="fixture">
        <table class="table" id="clientsTable">
          <thead>
-           <th class="forename">Forename</th>
-           <th class="surname">Surname</th>
+           <th class="fname">fname</th>
+           <th class="lname">lname</th>
            <th class="dob">Date of Birth</th>
-           <th class="address1">Address 1</th>
-           <th class="address2">Address 2</th>
+           <th class="line1">Address 1</th>
+           <th class="line2">Address 2</th>
            <th class="city">City</th>
            <th class="state">State</th>
            <th class="zip">Zip Code</th>
            <th class="country">Country</th>
-           <th class="phone">Phone Number</th>
+           <th class="telenum">telenum Number</th>
            <th class="email">Email Address</th>
          </thead>
          <tbody>
@@ -65,16 +66,16 @@ describe('View All Clients', function() {
   describe('on success when there are records in the database', function () {
     var insertRecords = function() {
       $('<tr>').append(
-        $('<td class="forename">').text(responses['data']['responseText']['forename']),
-        $('<td class="surname">').text(responses['data']['responseText']['surname']),
+        $('<td class="fname">').text(responses['data']['responseText']['fname']),
+        $('<td class="lname">').text(responses['data']['responseText']['lname']),
         $('<td class="dob">').text(responses['data']['responseText']['dob']),
-        $('<td class="address1">').text(responses['data']['responseText']['address']['address1']),
-        $('<td class="address2">').text(responses['data']['responseText']['address']['address2']),
+        $('<td class="line1">').text(responses['data']['responseText']['address']['line1']),
+        $('<td class="line2">').text(responses['data']['responseText']['address']['line2']),
         $('<td class="city">').text(responses['data']['responseText']['address']['city']),
         $('<td class="state">').text(responses['data']['responseText']['address']['state']),
         $('<td class="zip">').text(responses['data']['responseText']['address']['zip']),
         $('<td class="country">').text(responses['data']['responseText']['address']['country']),
-        $('<td class="phone">').text(responses['data']['responseText']['phone']),
+        $('<td class="telenum">').text(responses['data']['responseText']['telenum']),
         $('<td class="email">').text(responses['data']['responseText']['email'])
       ).appendTo($('#clientsTable tbody'));
     }
@@ -123,16 +124,16 @@ describe('View All Clients', function() {
      expect(stub).toHaveBeenCalled();
 
      expect($('tbody > tr > td')).toHaveLength(11);
-     expect($('tbody > tr > td.forename')).toContainText("John");
-     expect($('tbody > tr > td.surname')).toContainText("Doe");
+     expect($('tbody > tr > td.fname')).toContainText("John");
+     expect($('tbody > tr > td.lname')).toContainText("Doe");
      expect($('tbody > tr > td.dob')).toContainText("12/03/96");
-     expect($('tbody > tr > td.address1')).toContainText("12 Unit Road");
-     expect($('tbody > tr > td.address2')).toContainText("Karma Town");
+     expect($('tbody > tr > td.line1')).toContainText("12 Unit Road");
+     expect($('tbody > tr > td.line2')).toContainText("Karma Town");
      expect($('tbody > tr > td.city')).toContainText("Kingston");
      expect($('tbody > tr > td.state')).toContainText("Kingston");
      expect($('tbody > tr > td.zip')).toContainText("2134K5");
      expect($('tbody > tr > td.country')).toContainText("Jamaica");
-     expect($('tbody > tr > td.phone')).toContainText("18764555666");
+     expect($('tbody > tr > td.telenum')).toContainText("18764555666");
      expect($('tbody > tr > td.email')).toContainText("jdoe@mail.com");
 
     });
